@@ -94,18 +94,25 @@ def schedulable_test(lista,tipo):
         if x['P']==tam:
             x['R']=x['C']
         else:
-            vr=x['C']
-            vd=x['D']          
+            vr=x['C']        
             priority=tam-x['P']
-            ant=0             
-            while vr<vd and vr!=ant:
+            for i in range(priority):
+                tmp=[d for d in lista if d['P'] == tam-i]
+                ele=tmp[0]
+                vr=vr+ele['C']
+            ant=0 
+            #print("Start calculation %s, initial value=%d" % (x['name'],vr))           
+            while vr!=ant:  #vr<vd and vr!=ant:
                 ant=vr
                 nvr=x['C']
                 for i in range(priority):
                     tmp=[d for d in lista if d['P'] == tam-i]
                     ele=tmp[0]
-                    nvr=nvr+int(math.ceil(vr/ele['T']))*ele['C']
+                    incremento=int(math.ceil(vr/ele['T']))*ele['C']
+                    #print("task=%s,vant=%d,incremento=%d" % (ele['name'],vr,incremento))
+                    nvr=nvr+incremento
                 vr=nvr
+            #print("Finish vr=%d" % (vr))
             x['R']=vr
     return lista
 
@@ -134,43 +141,37 @@ task3={}
 task4={}
 task5={}
 task6={}
-task7={}
 task_list=[]
 task1['name']='A'
-task1['T']=1000
-task1['D']=20
-task1['C']=3
+task1['T']=35
+task1['D']=35
+task1['C']=9
 task_list.append(task1)
 task2['name']='B'
-task2['T']=100
-task2['D']=100
-task2['C']=10
+task2['T']=7
+task2['D']=7
+task2['C']=2
 task_list.append(task2)
 task3['name']='C'
-task3['T']=50
+task3['T']=60
 task3['D']=50
-task3['C']=20
+task3['C']=5
 task_list.append(task3)
 task4['name']='D'
-task4['T']=57
-task4['D']=10
-task4['C']=5
+task4['T']=1000
+task4['D']=30
+task4['C']=10
 task_list.append(task4)
 task5['name']='E'
-task5['T']=33
-task5['D']=33
-task5['C']=1
+task5['T']=30
+task5['D']=20
+task5['C']=3
 task_list.append(task5)
 task6['name']='F'
-task6['T']=7
-task6['D']=7
-task6['C']=1
+task6['T']=60
+task6['D']=55
+task6['C']=10
 task_list.append(task6)
-task7['name']='G'
-task7['T']=30
-task7['D']=5
-task7['C']=2
-task_list.append(task7)
 task_list=schedulable_test(task_list,'DMF')
 mutex_list=[]
 mutex1={}
@@ -179,39 +180,19 @@ mutex1['sem']='S1'
 mutex1['C']=2
 mutex_list.append(mutex1)
 mutex2={}
-mutex2['task']='A'
-mutex2['sem']='S3'
+mutex2['task']='C'
+mutex2['sem']='S2'
 mutex2['C']=2
 mutex_list.append(mutex2)
 mutex3={}
-mutex3['task']='B'
-mutex3['sem']='S2'
-mutex3['C']=7
+mutex3['task']='E'
+mutex3['sem']='S1'
+mutex3['C']=3
 mutex_list.append(mutex3)
 mutex4={}
-mutex4['task']='B'
-mutex4['sem']='S3'
+mutex4['task']='F'
+mutex4['sem']='S2'
 mutex4['C']=5
 mutex_list.append(mutex4)
-mutex5={}
-mutex5['task']='B'
-mutex5['sem']='S4'
-mutex5['C']=2
-mutex_list.append(mutex5)
-mutex6={}
-mutex6['task']='D'
-mutex6['sem']='S1'
-mutex6['C']=2
-mutex_list.append(mutex6)
-mutex7={}
-mutex7['task']='C'
-mutex7['sem']='S2'
-mutex7['C']=1
-mutex_list.append(mutex7)
-mutex8={}
-mutex8['task']='G'
-mutex8['sem']='S1'
-mutex8['C']=1
-mutex_list.append(mutex8)
 task_list=mutex_test(task_list,mutex_list)
 print_list(task_list)
