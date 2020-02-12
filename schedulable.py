@@ -63,7 +63,7 @@ def mutex_test(tasks,semaph):
 
 
 def schedulable_test(lista,tipo):
-    print("Sorting type: " + tipo)
+    print("Task Sorting type: " + tipo)
     if tipo=='DMF':
         newlist=sorted(lista, key=itemgetter('D'),reverse=True)
         i=1
