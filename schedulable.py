@@ -117,56 +117,64 @@ def schedulable_test(lista,tipo):
     return lista
 
 def print_list(lista):
-    newlist=sorted(lista, key=itemgetter('name'),reverse=False)           
-    print("Task   T    D     C    P    R    B   RB")
+    newlist=sorted(lista, key=itemgetter('name'),reverse=False)
+    if 'B' in newlist[0]:
+        print("Task   T    D     C    P    R    B   RB")
+    else
+        print("Task   T    D     C    P    R")
     planificable=True
     m_planificable=True    
     for x in newlist:
-        print(x['name']+"{:8d}".format(x['T'])+"{:5d}".format(x['D'])+"{:5d}".format(x['C'])+"{:5d}".format(x['P'])+"{:5d}".format(x['R'])+"{:5d}".format(x['B'])+"{:5d}".format(x['RB']))
-        if x['R']>x['D']: planificable=False
-        if x['RB']>x['D']: m_planificable=False
+        if 'B' in x:
+            print(x['name']+"{:8d}".format(x['T'])+"{:5d}".format(x['D'])+"{:5d}".format(x['C'])+"{:5d}".format(x['P'])+"{:5d}".format(x['R'])+"{:5d}".format(x['B'])+"{:5d}".format(x['RB']))
+            if x['R']>x['D']: planificable=False
+            if x['RB']>x['D']: m_planificable=False
+        else:            
+            print(x['name']+"{:8d}".format(x['T'])+"{:5d}".format(x['D'])+"{:5d}".format(x['C'])+"{:5d}".format(x['P'])+"{:5d}".format(x['R']))
+            if x['R']>x['D']: planificable=False            
     if planificable:
         print("System is schedulable.")
     else:
         print("System is not schedulable.")
-
-    if m_planificable:
-        print("System with mutex is schedulable.")
-    else:
-        print("System with mutex is not schedulable.")  
+        
+    if 'B' in newlist[0]:
+        if m_planificable:
+            print("System with mutex is schedulable.")
+        else:
+            print("System with mutex is not schedulable.")  
             
-task1={}
-task2={}
-task3={}
-task4={}
-task5={}
-task6={}
 task_list=[]
+task1={}
 task1['name']='A'
 task1['T']=35
 task1['D']=35
 task1['C']=9
 task_list.append(task1)
+task2={}
 task2['name']='B'
 task2['T']=7
 task2['D']=7
 task2['C']=2
 task_list.append(task2)
+task3={}
 task3['name']='C'
 task3['T']=60
 task3['D']=50
 task3['C']=5
 task_list.append(task3)
+task4={}
 task4['name']='D'
 task4['T']=1000
 task4['D']=30
 task4['C']=10
 task_list.append(task4)
+task5={}
 task5['name']='E'
 task5['T']=30
 task5['D']=20
 task5['C']=3
 task_list.append(task5)
+task6={}
 task6['name']='F'
 task6['T']=60
 task6['D']=55
