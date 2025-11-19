@@ -32,7 +32,7 @@ def mutex_test(tasks,semaph):
             set_sem = set()
             for item in new_lista:
                 set_mp.add(item['name'])
-                tmp_name=x['name']
+                tmp_name=item['name']
                 tmp3=[d for d in semaph if d['task'] == tmp_name]
                 for item1 in tmp3:
                     set_sem.add(item1['sem'])
@@ -204,3 +204,4 @@ mutex4['C']=5
 mutex_list.append(mutex4)
 task_list=mutex_test(task_list,mutex_list)
 print_list(task_list)
+
